@@ -10,32 +10,50 @@ IDisMax = 35; % Max Discharge Current
 %Vnom = 3.6 % Nominal Voltage
 %Vmin = 2.5 % Minimum Voltage
 %R0 = .02 % Maximum Internal Resistance
+an1 = 0;
+flag = 0;
+while ((an1 ~= 'c')&&(an1 ~= 'd'))
+    if flag == 1
+        fprintf("Invalid Input\n")
+    end
+    prompt  = "Are you charging or discharging your cell? (c/d) ";
+    an1 = input(prompt, "s");
+    flag = 1;
+end
 
-prompt = "What is you discharge current? ";
+prompt = "What is your charging or discharging current? ";
 Iin = input(prompt);
-if Iin > 40
-    disp("Not Possible")
+if (Iin > IDisMax && an1 == 'd') || ( Iin > IChargeMax && an1 == 'c')
+    disp(an1)
+    fprintf("Not Possible\n")
 %{
- elseif IChargeMax < Iin && Iin <= 40
-    prompt = "Are your sure about that? (yes/no) ";
-    Response = input(prompt);
-    if Response == "yes"
-        prompt = "It may damage your cell! (yes/no) ";
-        Response = input(prompt);
-        if Response == "yes"
+elseif IDisMax < Iin && Iin <= 40
+    prompt = "Are your sure about that? (y/n) ";
+    Response = input(prompt, "s");
+    if Response == 'y'
+        prompt = "It may damage your cell! (y/n) ";
+        Response = input(prompt, "s");
+        if Response == 'y'
             DTimeH = CapAh/Iin;
             DtimeMin = DTimeH * 60;
+            fprintf("Your cell discharged in %s hours and %s mins", DTimeH, DtimeMin)
         else 
             disp("good choice")
         end
     else
         disp("good choice")
     end
-  %}
+%}
+
 else
-    DTimeH = CapAh/Iin;
-    DtimeMin = DTimeH * 60;
-    disp(["Time in Hours" DTimeH "Time in Minutes: " DtimeMin])
+    timeh = CapAh/Iin;
+    timeMin = DTimeH * 60;
+    if an1 == 'd'
+        cord = "Discharged";
+    else
+        cord = "Charged";
+    end
+    fprintf("Your cell %s in %s hours or %s mins ", cord, num2str(DTimeH), num2str(DtimeMin))
 end
 
 
