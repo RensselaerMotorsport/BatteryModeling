@@ -9,7 +9,7 @@ IDisMax = 35; % Max Discharge Current
 %Vmax = 4.2 % Max Voltage
 %Vnom = 3.6 % Nominal Voltage
 %Vmin = 2.5 % Minimum Voltage
-%R0 = .02 % Maximum Internal Resistance
+R0 = .02; % Maximum Internal Resistance
 an1 = 0;
 flag = 0;
 while ((an1 ~= 'c')&&(an1 ~= 'd'))
@@ -47,13 +47,15 @@ elseif IDisMax < Iin && Iin <= 40
 
 else
     timeh = CapAh/Iin;
-    timeMin = DTimeH * 60;
+    power = (Iin^2)*R0;
+    timeMin = timeh * 60;
     if an1 == 'd'
         cord = "Discharged";
     else
         cord = "Charged";
     end
-    fprintf("Your cell %s in %s hours or %s mins ", cord, num2str(DTimeH), num2str(DtimeMin))
+    fprintf("Your cell %s in %s hours or %s mins \n", cord, num2str(timeh), num2str(timeMin))
+    fprintf("Power Disipated: %sW", num2str(power))
 end
 
 
