@@ -1,0 +1,39 @@
+Goals for Spring 2024:
+    Develop a steady-state python model for battery cell heating
+    Add functionality for a segment of cells
+    Accurate model with for a cell level fuse
+
+    let user put in battery info
+        Max, min, nominal cell voltage
+        nominal internal resistance
+        max current
+    Let user put in environment parameters
+        ambient temp
+        current draw from load
+        etc.
+    get data out from sim:
+        battery temp
+        internal resistance
+        etc.
+    Do this for all conductors eventually
+        bus bars
+        wires
+        fuses
+
+
+Inputs for our model:
+- Cell type
+- max, min, nominal cell voltage
+- nominal internal resistance
+- max current
+- ambient temp
+- current draw from load
+
+Outputs from our model:
+- battery temp
+- internal resistance
+
+
+Our model runs on the PyBaMM python API.
+https://docs.pybamm.org/en/stable/source/api/models/lithium_ion/base_lithium_ion_model.html
+
