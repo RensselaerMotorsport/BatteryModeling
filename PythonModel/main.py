@@ -30,15 +30,6 @@ def main():
     ambient_temp = 40  # float(input("Input an ambient temperature: "))
     current_draw = 12.87  # float(input("Input a current draw from load: "))
 
-    # battery_temp, internal_resistance = run_battery_model(cell_type, max_voltage,
-    #                                                       min_voltage, nom_voltage,
-    #                                                       nom_internal_resistance,
-    #                                                       max_current, ambient_temp,
-    #                                                       current_draw)
-
-    # print("Battery Temperature:", battery_temp, "K")
-    # print("Internal Resistance:", internal_resistance, "Ohm")
-
     test_model()
 
 
