@@ -38,6 +38,30 @@ Our model runs on the PyBaMM python API.
 https://docs.pybamm.org/en/stable/source/api/models/lithium_ion/base_lithium_ion_model.html
 
 
+The inputs we need to actually change to produce the correct output:
+
+SINGLE CELL
+ 'Ambient temperature [K]': 298.15,
+ 'Cell cooling surface area [m2]': 0.00531,
+ 'Cell volume [m3]': 2.42e-05,
+ 'Initial temperature [K]': 298.15,
+ 'Nominal cell capacity [A.h]': 5.0,
+ 'Open-circuit voltage at 0% SOC [V]': 3.105,
+ 'Open-circuit voltage at 100% SOC [V]': 4.1,
+FULL PACK
+ 'Number of cells connected in series to make a battery': 1.0,
+ 'Positive current collector conductivity [S.m-1]': 36914000.0,
+ 'Positive current collector density [kg.m-3]': 2700.0,
+ 'Positive current collector specific heat capacity [J.kg-1.K-1]': 897.0,
+ 'Positive current collector thermal conductivity [W.m-1.K-1]': 237.0,
+ 'Positive current collector thickness [m]': 1.6e-05,
+ 'Negative current collector conductivity [S.m-1]': 58411000.0,
+ 'Negative current collector density [kg.m-3]': 8960.0,
+ 'Negative current collector specific heat capacity [J.kg-1.K-1]': 385.0,
+ 'Negative current collector thermal conductivity [W.m-1.K-1]': 401.0,
+ 'Negative current collector thickness [m]': 1.2e-05,
+
+
 
 This is an exhaustive list of all inputs that the model can take:
 

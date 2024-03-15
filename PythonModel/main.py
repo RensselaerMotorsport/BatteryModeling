@@ -7,28 +7,36 @@ def test_model():
     start = time()
     model = pybamm.lithium_ion.DFN()
 
-    sim = pybamm.Simulation(model)
+    param = model.default_parameter_values
+    param['Ambient temperature [K]'] = 316.483
+    param['Cell cooling surface area [m2]'] = 0.00367
+    param['Cell volume [m3]'] = 1.65e-05
+    param['Initial temperature [K]'] = 316.483
+    param['Nominal cell capacity [A.h]'] = 2.6
+    param['Open-circuit voltage at 0% SOC [V]'] = 2.5
+    param['Open-circuit voltage at 100% SOC [V]'] = 4.2
 
-    t_eval = np.linspace(0, 7200, 10000)
+    sim = pybamm.Simulation(model, parameter_values=param)
+
+    t_eval = np.linspace(0, 3600, 3600)
     sim.solve(t_eval)
 
     end = time()-start
 
     print(end)
 
-    param = model.default_parameter_values
-    print(param)
     sim.plot()
 
+
 def main():
-    cell_type = 18650  # input("Input a cell type: ")
-    max_voltage = 4.2  # float(input("Input a maximum cell voltage: "))
-    min_voltage = 2.5  # float(input("Input a minimum cell voltage: "))
-    nom_voltage = 3.6  # float(input("Input a nominal cell voltage: "))
-    max_current = 36  # float(input("Input a maximum current: "))
-    nom_internal_resistance = 20  # float(input("Input a nominal internal resistance: "))
-    ambient_temp = 40  # float(input("Input an ambient temperature: "))
-    current_draw = 12.87  # float(input("Input a current draw from load: "))
+    # cell_type = 18650  # input("Input a cell type: ")
+    # max_voltage = 4.2  # float(input("Input a maximum cell voltage: "))
+    # min_voltage = 2.5  # float(input("Input a minimum cell voltage: "))
+    # nom_voltage = 3.6  # float(input("Input a nominal cell voltage: "))
+    # max_current = 36  # float(input("Input a maximum current: "))
+    # nom_internal_resistance = 20  # float(input("Input a nominal internal resistance: "))
+    # ambient_temp = 40  # float(input("Input an ambient temperature: "))
+    # current_draw = 12.87  # float(input("Input a current draw from load: "))
 
     test_model()
 
