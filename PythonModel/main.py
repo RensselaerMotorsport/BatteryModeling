@@ -2,10 +2,13 @@ import matplotlib
 import pybamm
 from time import time
 import numpy as np
+import matplotlib.pyplot as plt
+
 
 def test_model():
     start = time()
     model = pybamm.lithium_ion.DFN()
+    solns = []
 
     param = model.default_parameter_values
     param['Ambient temperature [K]'] = 316.483
@@ -15,17 +18,52 @@ def test_model():
     param['Nominal cell capacity [A.h]'] = 2.6
     param['Open-circuit voltage at 0% SOC [V]'] = 2.5
     param['Open-circuit voltage at 100% SOC [V]'] = 4.2
+    param['Current function [A]'] = 5
 
     sim = pybamm.Simulation(model, parameter_values=param)
 
-    t_eval = np.linspace(0, 3600, 3600)
+    t_eval = np.linspace(0, 3600)
     sim.solve(t_eval)
 
     end = time()-start
 
-    print(end)
+    solns.append(sim._solution)
 
-    sim.plot()
+    # ----------------------------------------------------------------- #
+    # param['Ambient temperature [K]'] = 200
+    # param['Cell cooling surface area [m2]'] = 0.004
+    # param['Cell volume [m3]'] = 1.65e-05
+    # param['Initial temperature [K]'] = 320
+    # param['Nominal cell capacity [A.h]'] = 3
+    # param['Open-circuit voltage at 0% SOC [V]'] = 2
+    # param['Open-circuit voltage at 100% SOC [V]'] = 5
+
+    # sim = pybamm.Simulation(model, parameter_values=param)
+    # sim.solve(t_eval)
+    # solns.append(sim._solution)
+    #
+    # print(type(sim._solution))
+
+    # pybamm.QuickPlot(solns).dynamic_plot()
+    # Assuming solutions is a list of pybamm.Solution objects
+    # Adjust time ranges for each solution
+    # for i, sol in enumerate(solns):
+    #     # Calculate time range for this solution
+    #     start_time = i * (sol.t[-1] - sol.t[0])
+    #     end_time = (i + 1) * (sol.t[-1] - sol.t[0])
+    #     sol.t = sol.t + start_time
+
+    # Now create a QuickPlot object with the adjusted solutions
+    # quick_plot = pybamm.QuickPlot(solns)
+
+    # solns[0].save_data(filename="out.pickle", variables=None, to_format='pickle', short_names=None)
+    print(solns[0]["Cell temperature [K]"].entries)
+    print(solns[0]["Voltage [V]"].entries)
+    plt.plot(solns[0]["Voltage [V]"].entries)
+    # Plot the solutions dynamically
+    # quick_plot.dynamic_plot()
+    plt.show()
+    print(end)
 
 
 def main():
