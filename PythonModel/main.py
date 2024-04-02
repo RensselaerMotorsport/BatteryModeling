@@ -7,7 +7,8 @@ import matplotlib.pyplot as plt
 
 def test_model():
     start = time()
-    model = pybamm.lithium_ion.DFN()
+    options = {"thermal": "x-full"}
+    model = pybamm.lithium_ion.DFN(options)
     solns = []
 
     param = model.default_parameter_values
@@ -18,7 +19,7 @@ def test_model():
     param['Nominal cell capacity [A.h]'] = 2.6
     param['Open-circuit voltage at 0% SOC [V]'] = 2.5
     param['Open-circuit voltage at 100% SOC [V]'] = 4.2
-    param['Current function [A]'] = 5
+    param['Current function [A]'] = 2
 
     sim = pybamm.Simulation(model, parameter_values=param)
 
@@ -54,14 +55,24 @@ def test_model():
     #     sol.t = sol.t + start_time
 
     # Now create a QuickPlot object with the adjusted solutions
-    # quick_plot = pybamm.QuickPlot(solns)
+    quick_plot = pybamm.QuickPlot(solns, ["X-averaged cell temperature [K]"])
+    quick_plot.dynamic_plot()
 
     # solns[0].save_data(filename="out.pickle", variables=None, to_format='pickle', short_names=None)
-    print(solns[0]["Cell temperature [K]"].entries)
-    print(solns[0]["Voltage [V]"].entries)
-    plt.plot(solns[0]["Voltage [V]"].entries)
+    # print(solns[0]["Cell temperature [K]"].entries)
+    # print(solns[0]["Voltage [V]"].entries)
+    # print(solns[0].get_data_dict())
+
+
+    # print(quick_plot.variables[("X-averaged cell temperature [K]",)])
+    # plt.plot(solns[0]["Voltage [V]"].entries)
+
+
     # Plot the solutions dynamically
-    # quick_plot.dynamic_plot()
+    # new_plot = pybamm.dynamic_plot(solns, ["X-averaged cell temperature [K]"])
+    print(quick_plot.variables[("X-averaged cell temperature [K]",)][0][0].base_variables)
+    # quick_plot.plots[("Voltage [V]", )][0][0].show()
+
     plt.show()
     print(end)
 
