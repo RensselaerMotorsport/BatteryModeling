@@ -30,47 +30,31 @@ def test_model():
 
     solns.append(sim._solution)
 
-    # ----------------------------------------------------------------- #
-    # param['Ambient temperature [K]'] = 200
-    # param['Cell cooling surface area [m2]'] = 0.004
-    # param['Cell volume [m3]'] = 1.65e-05
-    # param['Initial temperature [K]'] = 320
-    # param['Nominal cell capacity [A.h]'] = 3
-    # param['Open-circuit voltage at 0% SOC [V]'] = 2
-    # param['Open-circuit voltage at 100% SOC [V]'] = 5
 
-    # sim = pybamm.Simulation(model, parameter_values=param)
-    # sim.solve(t_eval)
-    # solns.append(sim._solution)
-    #
-    # print(type(sim._solution))
-
-    # pybamm.QuickPlot(solns).dynamic_plot()
-    # Assuming solutions is a list of pybamm.Solution objects
-    # Adjust time ranges for each solution
-    # for i, sol in enumerate(solns):
-    #     # Calculate time range for this solution
-    #     start_time = i * (sol.t[-1] - sol.t[0])
-    #     end_time = (i + 1) * (sol.t[-1] - sol.t[0])
-    #     sol.t = sol.t + start_time
 
     # Now create a QuickPlot object with the adjusted solutions
     quick_plot = pybamm.QuickPlot(solns, ["X-averaged cell temperature [K]"])
     quick_plot.dynamic_plot()
 
-    # solns[0].save_data(filename="out.pickle", variables=None, to_format='pickle', short_names=None)
     # print(solns[0]["Cell temperature [K]"].entries)
     # print(solns[0]["Voltage [V]"].entries)
     # print(solns[0].get_data_dict())
 
-
-    # print(quick_plot.variables[("X-averaged cell temperature [K]",)])
     # plt.plot(solns[0]["Voltage [V]"].entries)
 
 
     # Plot the solutions dynamically
     # new_plot = pybamm.dynamic_plot(solns, ["X-averaged cell temperature [K]"])
-    print(quick_plot.variables[("X-averaged cell temperature [K]",)][0][0].base_variables)
+    print(type(quick_plot.variables[("X-averaged cell temperature [K]",)][0][0].base_variables[0]))
+    '''
+    <class 'pybamm.expression_tree.binary_operators.Addition'>
+    
+    This is the type of the data printed above, so thats where you will find the class (i.e. the binary_operators
+    file in the PyBaMM folders)
+    '''
+
+
+
     # quick_plot.plots[("Voltage [V]", )][0][0].show()
 
     plt.show()
